@@ -1,11 +1,24 @@
+@font-face {
+  font-family: 'WDXL_Lubrifont_JP_N';
+  src: url('/WDXL_Lubrifont_JP_N/WDXLLubrifontJPN-Regular.ttf');
+}
 body{
   margin: 0;
   padding: 0;
   width: 100%;
+  font-family: 'WDXL_Lubrifont_JP_N';
+  background-color: #F5F5F5;
 }
 #app {
   width: 100%;
   margin: 0;
   display: flex;
   flex-direction: column;
+}
+main{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }

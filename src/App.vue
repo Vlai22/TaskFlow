@@ -4,7 +4,7 @@
 
 <template>
   <header>
-    <img src="" alt="logo">
+    <router-link style="margin: 0;" to="/"><img src="/logo.svg" alt="logo"></router-link>
     <nav>
       <router-link to="/about">О нас</router-link>
       <router-link to="/login">Зарегистрироваться/войти</router-link>
@@ -21,8 +21,14 @@
 <style scoped>
 header{
   display: flex;
-  background-color: #F5F5F5;
+  background-image: linear-gradient(140deg, #5480b0 30%, #E6F7FF 34%);
   justify-content: space-between;
+  align-items: center;
+}
+img{
+  width: 200px;
+  height: 70px;
+  margin: 30px;
 }
 a{
   color: #6C7A89;
