@@ -1,43 +1,78 @@
 <script>
+import CardHomePage from '@/components/UI/CardHomePage.vue';
 export default {
-  data() {
-    return {
-      isInViewport: false,
-      observer: null
-    }
-  },
-  mounted() {
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          this.isInViewport = entry.isIntersecting
-        })
-      },
-      {
-        threshold: 0.1
+    components:{
+        CardHomePage
+    },
+    data() {
+      return {
+        isInViewport: false,
+        observer: null,
+        cards:[
+            {
+                id: 'first_card_home_page',
+                title: 'Настройте свой день',
+                text: 'С TaskFlow вы можете легко создавать, редактировать и отслеживать задачи. Система уведомлений поможет вам не упустить ничего важного.'
+
+            },{
+                id: 'second_card_home_page',
+                title: 'Управляйте задачами с легкостью',
+                text: 'С TaskFlow вы можете легко создавать, редактировать и отслеживать задачи. Система уведомлений поможет вам не упустить ничего важного.'
+
+            },{
+                id: 'tride_card_home_page',
+                title: 'Оставайтесь на связи',
+                text: 'TaskFlow предлагает встроенные инструменты для общения с командой. Обменивайтесь сообщениями, файлами и обновлениями в реальном времени.'
+
+            },{
+                id: 'fourst_card_home_page',
+                title: 'Доступен везде',
+                text: 'TaskFlow доступен на всех ваших устройствах — компьютере, смартфоне и планшете. Планируйте и управляйте задачами в любое время и в любом месте.'
+
+            },{
+                id: 'fifts_card_home_page',
+                title: 'Ваши данные в безопасности',
+                text: 'Мы используем современные методы шифрования и защиты данных, чтобы обеспечить безопасность вашей информации. Ваши данные всегда под защитой.'
+
+            }
+            
+        ]
       }
-    )
-    
-    this.observer.observe(document.getElementById("second_section_home_page"));
-    this.observer.observe(document.getElementById("second_section_home_page"));
-  },
-  beforeUnmount() {
-    if (this.observer) {
-      this.observer.disconnect()
+    },
+    mounted() {
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            this.isInViewport = entry.isIntersecting
+          })
+        },
+        {
+          threshold: 0.1
+        }
+      )
+      
+      this.observer.observe(document.getElementById("first_section_home_page"));
+    },
+    beforeUnmount() {
+      if (this.observer) {
+        this.observer.disconnect()
+      }
     }
-  }
 }
 </script>
 
 <template>
     <main>
-        <section id="second_section_home_page" :class="{'visible': isInViewport}" class="section_hello">
+        <section id="first_section_home_page" :class="{'visible': isInViewport}" class="section_hello">
             <h1>Добро пожаловать в мир TaskFlow!</h1>
             <div>
                 <p class="section_hello_message">Планируйте, управляйте и достигайте с легкостью.</p>
                 <p class="section_hello_message rigth">Создавайте идеальный распорядок дня.</p>
                 <p class="section_hello_message">Начните свой путь к успеху уже сегодня.</p>
             </div>
+        </section>
+        <section id="second_section_home_page"  class="section_adveantes">
+            <CardHomePage v-for="card in cards" :key="card.id" :text="card.text">{{ card.title }}</CardHomePage>
         </section>
     </main>
 </template>
@@ -55,7 +90,7 @@ section{
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: opacity 1s;
+    transition: opacity 2s;
     opacity: 0%;
 }
 .section_hello.visible{
@@ -82,5 +117,12 @@ section{
 }
 .rigth{
     align-self: flex-end;
+}
+.section_adveantes{
+    width: 70%;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: flex-start;
 }
 </style>
