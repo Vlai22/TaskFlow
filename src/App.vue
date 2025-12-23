@@ -1,47 +1,42 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script>
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <img src="" alt="logo">
+    <nav>
+      <router-link to="/about">О нас</router-link>
+      <router-link to="/login">Зарегистрироваться/войти</router-link>
+      <router-link to="/work">Работать</router-link>
+      <router-link to="/faq">FAQ</router-link>
+    </nav>
   </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <router-view />
+  <footer>
+    <p>Все права защищены мной епта;)</p>
+  </footer>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+header{
+  display: flex;
+  background-color: #F5F5F5;
+  justify-content: space-between;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+a{
+  color: #6C7A89;
+  text-decoration: none;
+  margin: 20px;
+  font-size: 20px;
+  font-weight: 700;
+  transition: color 0.5s;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+a:hover{
+  color: #6a94c0;
+}
+footer{
+  font-size: 25px;
+  font-weight: 900;
 }
 </style>
