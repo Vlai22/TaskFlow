@@ -11,6 +11,10 @@ export default{
         type:{
             type: String,
             default: 'text'
+        },
+        width:{
+            type: String,
+            default: ''
         }
     }
 }
@@ -18,7 +22,7 @@ export default{
 
 <template>
     <label :for="id"><slot></slot></label>
-    <input :id="id" :type="type" :placeholder="placeholder">
+    <input :style="width" :id="id" :type="type" :placeholder="placeholder">
 </template>
 
 <style scoped>

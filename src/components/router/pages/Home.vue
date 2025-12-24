@@ -119,6 +119,9 @@ export default {
             }else{
 
             }
+        },
+        OpenWork(){
+            this.$router.push('/work');
         }
     }
 };
@@ -164,7 +167,7 @@ export default {
         </section>
         <section class="fourth_section_open_app">
             <h2>Если не хочекшь регистрироваться или входить модно просто войти</h2>
-            <Button>Войти без регестрации</Button>
+            <Button @click="OpenWork()">Войти без регестрации</Button>
             <p>P.S. после входа без регистрации у вас откроется приложение но если вы перезагрузите страницу то все изменения вероятно сбросяться!!!</p>
         </section>
     </main>
