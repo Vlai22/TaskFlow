@@ -1,64 +1,103 @@
 <script>
 import CardHomePage from '@/components/UI/CardHomePage.vue';
+
 export default {
-    components:{
+    components: {
         CardHomePage
     },
     data() {
-      return {
-        isInViewport: false,
-        observer: null,
-        cards:[
-            {
-                id: 'first_card_home_page',
-                title: 'Настройте свой день',
-                text: 'С TaskFlow вы можете легко создавать, редактировать и отслеживать задачи. Система уведомлений поможет вам не упустить ничего важного.'
-
-            },{
-                id: 'second_card_home_page',
-                title: 'Управляйте задачами с легкостью',
-                text: 'С TaskFlow вы можете легко создавать, редактировать и отслеживать задачи. Система уведомлений поможет вам не упустить ничего важного.'
-
-            },{
-                id: 'tride_card_home_page',
-                title: 'Оставайтесь на связи',
-                text: 'TaskFlow предлагает встроенные инструменты для общения с командой. Обменивайтесь сообщениями, файлами и обновлениями в реальном времени.'
-
-            },{
-                id: 'fourst_card_home_page',
-                title: 'Доступен везде',
-                text: 'TaskFlow доступен на всех ваших устройствах — компьютере, смартфоне и планшете. Планируйте и управляйте задачами в любое время и в любом месте.'
-
-            },{
-                id: 'fifts_card_home_page',
-                title: 'Ваши данные в безопасности',
-                text: 'Мы используем современные методы шифрования и защиты данных, чтобы обеспечить безопасность вашей информации. Ваши данные всегда под защитой.'
-
-            }
-            
-        ]
-      }
+        return {
+            isInViewport: false,
+            observers: [], 
+            observer: null,
+            cards: [
+                {
+                    id: 'first_card_home_page',
+                    title: 'Настройте свой день',
+                    text: 'С TaskFlow вы можете легко создавать, редактировать и отслеживать задачи. Система уведомлений поможет вам не упустить ничего важного.',
+                    rigth: false,
+                    visible: false,
+                    img: ''
+                },
+                {
+                    id: 'second_card_home_page',
+                    title: 'Управляйте задачами с легкостью',
+                    text: 'Используйте интуитивный интерфейс для управления вашими задачами. Драг-энд-дроп, фильтры и теги помогут организовать работу.',
+                    rigth: true,
+                    visible: false,
+                    img: ''
+                },
+                {
+                    id: 'third_card_home_page',  // Исправлено
+                    title: 'Оставайтесь на связи',
+                    text: 'TaskFlow предлагает встроенные инструменты для общения с командой. Обменивайтесь сообщениями, файлами и обновлениями в реальном времени.',
+                    rigth: false,
+                    visible: false,
+                    img: ''
+                },
+                {
+                    id: 'fourth_card_home_page',
+                    title: 'Доступен везде',
+                    text: 'TaskFlow доступен на всех ваших устройствах — компьютере, смартфоне и планшете. Планируйте и управляйте задачами в любое время и в любом месте.',
+                    rigth: true,
+                    visible: false,
+                    img: ''
+                },
+                {
+                    id: 'fifth_card_home_page',
+                    title: 'Ваши данные в безопасности',
+                    text: 'Мы используем современные методы шифрования и защиты данных, чтобы обеспечить безопасность вашей информации. Ваши данные всегда под защитой.',
+                    rigth: false,
+                    visible: false,
+                    img: ''
+                }
+            ]
+        };
     },
     mounted() {
-      this.observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            this.isInViewport = entry.isIntersecting
-          })
-        },
-        {
-          threshold: 0.1
-        }
-      )
-      
-      this.observer.observe(document.getElementById("first_section_home_page"));
+        // Создаем один наблюдатель для всех элементов
+        this.observer = new IntersectionObserver(
+            (entries) => {//все элементы перечисляем
+                entries.forEach(entry => {
+                    this.isInViewport = entry.isIntersecting;
+                });
+            },
+            {
+                threshold: 0.1,//поцегь видимости 
+            }
+        );
+        // Наблюдаем за секцией
+        let sectionElement = document.getElementById('first_section_home_page');
+        this.observer.observe(sectionElement);
+        this.$data.cards.forEach(card =>{
+            let cardobjerver = new IntersectionObserver(
+                (entries)=>{
+                    entries.forEach(entry =>{
+                        let targetId = entry.target.id;
+                        console.log(targetId)
+                        if(targetId == card.id){
+                            card.visible = entry.isIntersecting;
+                        }
+                    });
+                },
+                {
+                    threshold: 0.1,//процент видимости обхекта
+                }
+            );
+            cardobjerver.observe(document.getElementById(card.id));//добавление элемента наблюдения
+            this.observers.push(cardobjerver);//добавление наблюдателя в список наблюдателеей
+        });
     },
     beforeUnmount() {
-      if (this.observer) {
-        this.observer.disconnect()
-      }
+        // Отключаем наблюдатель
+        if (this.observer) {
+            this.observer.disconnect();
+        }
+        this.observers.forEach(cardobserver => {
+            cardobserver.disconnect();
+        });
     }
-}
+};
 </script>
 
 <template>
@@ -72,7 +111,7 @@ export default {
             </div>
         </section>
         <section id="second_section_home_page"  class="section_adveantes">
-            <CardHomePage v-for="card in cards" :key="card.id" :text="card.text">{{ card.title }}</CardHomePage>
+            <CardHomePage v-for="card in cards" :img="card.img" :key="card.id" :id="card.id" :rigth="card.rigth" :visible="card.visible" :text="card.text">{{ card.title }}</CardHomePage>
         </section>
     </main>
 </template>
@@ -81,7 +120,7 @@ export default {
 section{
     box-shadow: 5px 0 10px  #3f81a05b,
                 -5px 0 10px #3f81a05b;
-  clip-path: inset(10px -10px 10px -10px);
+    clip-path: inset(10px -10px 10px -10px);
 }
 .section_hello {
     width: 70%;
