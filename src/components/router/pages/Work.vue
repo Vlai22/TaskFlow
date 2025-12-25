@@ -61,7 +61,8 @@ export default{
                 backgroundColor: '#a2a2a2',
                 top: '50px',
                 borderRadius: '5px',
-            }
+            },
+            renger: 60
         }
     },
     methods:{
@@ -74,6 +75,9 @@ export default{
         },
         SelectView(e){
             this.view = e;
+        },
+        inputRange(data){
+            this.$data.renger = Number(data.data);
         }
     }
 }
@@ -92,9 +96,10 @@ export default{
                 </div>
             </div>
             <div class="section_top_bar_input_name">
-                <Input width="width: 700px;" :id="'input_name_task'"></Input>
+                <Input width="width: 700px;" :id="'input_name_task'" :placeholder="'Введите название'"></Input>
             </div>
             <div class="section_top_bar_select_color">
+                <Input v-if="view == 'Календарь'" :value="renger" @input-data="inputRange" :id="'input_time_range'" :placeholder="'Введите время ранжирования'"></Input>
                 <p>ПОка в разработке</p>
             </div>
         </section>
@@ -103,7 +108,7 @@ export default{
                 <p>Пока в разработке</p>
             </div>
             <div id="workspace" class="section_main_workspace_workspace">
-                <CalendarViev v-if="view == 'Календарь'"></CalendarViev>
+                <CalendarViev v-if="view == 'Календарь'" :renger="this.$data.renger"></CalendarViev>
             </div>
         </section>
     </main>
@@ -133,7 +138,6 @@ export default{
 }
 .section_main_workspace{
     width: 100%;
-    height: 800px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -141,6 +145,10 @@ export default{
 }
 .section_main_workspace_left_bar{
     width: 300px;
+}
+.section_top_bar_select_color{
+    display: flex;
+    flex-direction: row;
 }
 .section_main_workspace_workspace{
     width: 100%;

@@ -12,7 +12,7 @@ export default{
             type: String,
             default: 'text'
         },
-        width:{
+        style:{
             type: String,
             default: ''
         },
@@ -28,23 +28,18 @@ export default{
 </script>
 
 <template>
-    <label :for="id"><slot></slot></label>
-    <input :value="value" @input="sendDataInput" :style="width" :id="id" :type="type" :placeholder="placeholder">
+    <input :value="value" @input="sendDataInput" :style="style" :id="id" :type="type" :placeholder="placeholder">
 </template>
 
 <style scoped>
 input{
-    height: 60px;
-    font-size: 20px;
+    height: 20px;
+    font-size: 15px;
     font-weight: 700;
     margin: 10px;
-    border-radius: 20px;
-    border: 4px solid #2a7496;;
+    background-color: transparent;
+    border: none;
+    border-bottom: 4px solid #2a7496;;
     outline: none;
-}
-label{
-    font-size: 24px;
-    font-weight: 600;
-    margin-left: 10px;
 }
 </style>
