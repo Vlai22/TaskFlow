@@ -32,7 +32,7 @@ export default{
                 <InputCardCalendar :id="'text_task_'+this.sid" :placeholder="'Введите описание задачи'"></InputCardCalendar>
             </div>
             <div>
-                <Button>Редкатор</Button>
+                <Button>Редактор</Button>
             </div>
         </div>
     </div>

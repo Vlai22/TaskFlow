@@ -62,7 +62,7 @@ export default{
                 top: '50px',
                 borderRadius: '5px',
             },
-            renger: 60
+            renger: 60,
         }
     },
     methods:{

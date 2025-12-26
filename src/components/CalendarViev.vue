@@ -10,10 +10,31 @@ export default{
         },
         renger:{
             type: Number,
+        },
+    },
+    data(){
+        return{
+            count_days: 0,
+            observer: null,
         }
     },
     mounted(){
-
+        let w = Math.floor(Number(document.getElementById('calendar_workspace').getBoundingClientRect().width));
+        this.count_days = Math.floor(w / 420)+3;
+        this.observer = new IntersectionObserver(
+            (entries) =>{
+                entries.forEach((enty) => {
+                    if(enty.isIntersecting == true){
+                        this.count_days += 3;
+                    }
+                });
+            },
+            {
+                threshold: 0.1
+            }
+        );
+        let arr_elem = document.getElementsByClassName('container_column');
+        this.observer.observe(arr_elem[arr_elem.length - 3]);
     },
     methods:{
         timeReturn(time){
@@ -38,11 +59,11 @@ export default{
 </script>
 
 <template>
-    <div class="date_tasks">
+    <div class="date_tasks" id="calendar_workspace">
         <div class="container_column">
             <CalendarCard :type="'Time'" v-for="time in Math.round(1440/renger)">{{ timeReturn(time) }}</CalendarCard>
         </div>
-        <div class="container_column">
+        <div class="container_column" v-for="num in count_days">
             <CalendarCard v-for="time in Math.round(1440/renger)"></CalendarCard>
         </div>
     </div>
@@ -52,6 +73,7 @@ export default{
 .date_tasks{
     position: relative;
     display: flex;
+    width: 100%;
     flex-direction: row;
     overflow-x: scroll;
 }
